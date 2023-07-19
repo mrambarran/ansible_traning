@@ -1,0 +1,14 @@
+---
+
+- name: Installing Galaxy Packages
+  hosts: localserver
+  gather_facts: no
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Installing Galaxy Packages
+      community.general.ansible_galaxy_install:
+        type: both
+        requirements_file: /requirements.yaml
+      #delegate_to: local        
