@@ -24,6 +24,17 @@
     group: root
     mode: 0444
 
+- name: Create Directory
+  file:
+    path: "{{ REMOTE_PATH }}/{{ student_name }}"
+    state: directory
+
+- name: Create file
+  file:
+    path: "{{ REMOTE_PATH }}/{{ student_name }}/{{ student_name }}.txt"
+    state: touch
+
+
 #- name: Display retrieved data
 #  debug:
 #    var: output.json.fact

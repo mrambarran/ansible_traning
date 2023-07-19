@@ -1,6 +1,8 @@
 ---
 # vars file for motd-setup
 
-API_URL: https://catfact.ninja/fact
+API_PATH: https://catfact.ninja/fact
 TEMPLATE_PATH: templates/motd.j2
-FILE_DEST: /etc/motd
+DEST_PATH: /etc/motd
+
+REMOTE_PATH: /home/ubuntu/
