@@ -1,0 +1,60 @@
+---
+
+- name: Block Assignment
+  hosts: webservers
+  gather_facts: yes
+  become: yes
+  become_user: root
+
+  vars:
+    debian_packages:
+      - tree
+      - vim
+      - curl
+    redhat_packages:
+      - httpd
+      - vim-enhanced
+      - wget
+
+  tasks:
+    - name: Debian Tasks
+      block:
+        - name: Update and upgrade all Debian packages
+          apt:
+            update_cache: yes 
+            upgrade: yes
+
+        - name: Install packages
+          apt:
+            name: "{{ item }}"
+            state: present
+          loop: "{{ debian_packages }}"
+        
+        - name: Create a user
+          ansible.builtin.user:
+            name: student
+            password: "{{ lookup('openssl_password') }}"
+      when: ansible_facts['os_family'] == 'Debian'
+      rescue:
+        - name: Error handler
+          debug:
+            msg: "An error occured during the execution of the Debian block."
+
+    - name: Redhat Tasks
+      block:
+        - name: IUpdate and upgrade all Redhat packages
+          yum:
+            name: '*'
+            state: latest
+        - name: Install Packages
+          yum:
+            name: "{{ item }}"
+            state: latest
+          loop: "{{ redhat_packages }}"       
+      when: ansible_facts['os_family'] == 'Redhat'
+      rescue:
+        - name: Error handler
+          debug:
+            msg: "An error occured during the execution of the Redhat block."  
+
+        

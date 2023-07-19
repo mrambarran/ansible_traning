@@ -1,0 +1,7 @@
+- name: Print first name
+  debug:
+    msg: "{{ firstName }}"
+
+- name: Print last name
+  debug:
+    msg: "{{ lastName }}"

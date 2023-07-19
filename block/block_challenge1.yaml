@@ -1,0 +1,35 @@
+---
+
+- name: Block Challenge
+  hosts: webservers
+  gather_facts: yes
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: Debian Tasks
+      block:
+        - name: Update and upgrade all Debian packages
+          apt:
+            update_cache: yes 
+            upgrade: yes
+
+        - name: Install tree packages
+          apt:
+            name: tree
+            state: present
+      when: ansible_facts['os_family'] == 'Debian'
+      rescue:
+        - name: Error handler
+          debug:
+            msg: "An error occured during the execution of the Debiab block."
+
+    - name: Redhat Tasks
+      block:
+        - name: IUpdate and upgrade all Redhat packages
+          yum:
+            name: '*'
+            state: latest
+      when: ansible_facts['os_family'] == 'Redhat'  
+
+        

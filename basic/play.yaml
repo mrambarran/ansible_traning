@@ -1,0 +1,29 @@
+---
+
+- name: My First Play
+  hosts: webservers
+  gather_facts: no
+
+  tasks:
+  - name: Print a message
+    debug:
+      msg: "Printing a message"
+  
+  - name: Print another message
+    debug:
+      msg: "Printing another message"
+  
+  - name: Create directory
+    file: 
+      dest: ~/b
+      state: directory
+  
+  - name: Create file
+    file:
+      dest: ~/b/h.txt
+      state: touch
+  
+
+
+
+

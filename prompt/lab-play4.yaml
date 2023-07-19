@@ -1,0 +1,26 @@
+---
+
+- hosts: webservers
+  gather_facts: no
+
+  name: Lists file in a directory
+  
+  tasks:
+  - name: Lists files in a directory
+    shell: ls ~/b
+    register: output
+  
+  - name: Print ouput
+    debug:
+      var: output.stdout
+  
+  - name: View contents of file
+    shell: "cat ~/b/{{ output.stdout }}"
+    register: file_output
+  
+  - name: Print file contents
+    debug:
+      var: file_output.stdout
+
+
+

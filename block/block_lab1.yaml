@@ -1,0 +1,33 @@
+---
+
+- name: Block example
+  hosts: webservers
+  gather_facts: no
+
+  vars:
+    epic: true
+ 
+  tasks:
+    - name: Block A
+      block:  
+      - name: Print msg A
+        debug: msg="Hello A" 
+      
+      - name: Print msg B
+        debug: msg="Hello B" 
+      
+      - name: Forcing a failure
+        fail: msg="This is a failing task"
+      
+      - name: Print msg C
+        debug: msg="Hello C" 
+      
+      - name: Print msg D
+        debug: msg="Hello D" 
+      when: epic
+      rescue:
+        - name: Print rescue message
+          debug: msg="This is a rescue task"
+      always:
+        - name: Print always
+          debug: msg="Always executed"

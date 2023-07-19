@@ -1,0 +1,4 @@
+username = {{ userName }}
+fav_color = {{ fav_color }}
+hostname = {{ ansible_hostname }}
+

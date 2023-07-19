@@ -1,0 +1,19 @@
+---
+
+- name: Block example
+  hosts: webservers
+  gather_facts: no
+
+  vars:
+    epic: true
+
+    mylist:
+     - A
+     - B
+     - C
+ 
+  tasks:
+    - name: Task Block
+      include_tasks:
+        file: tasks.yaml
+      loop: "{{ mylist }}"

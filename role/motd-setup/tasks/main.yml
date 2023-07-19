@@ -1,0 +1,27 @@
+---
+# tasks file for motd-setup
+
+
+
+- name: Use REST API to retrieve some data
+  uri:
+    url: "https://catfact.ninja/fact"
+    return_content: true
+    body_format: json
+  register: output
+
+- name: Create a var for fact
+  set_fact:
+    motd_msg: "{{ output.json.fact }}"
+
+- name: Copy motd file to remote server
+  template:
+    src: templates/motd.j2
+    dest: /etc/motd
+    owner: root
+    group: root
+    mode: 0444
+
+#- name: Display retrieved data
+#  debug:
+#    var: output.json.fact

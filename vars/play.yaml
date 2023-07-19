@@ -1,0 +1,23 @@
+---
+
+- name: A play with variables
+  hosts: all
+  gather_facts: no
+
+  vars:
+    first_name: John
+    last_name: Doe
+
+  tasks:
+  - name: Print first name using var
+    debug:
+      var: first_name
+  
+  - name: Greeting with last name using msg
+    debug:
+      msg: "Helo {{ last_name }}"
+  
+  - name: Greeting with first and last names using msg
+    debug:
+      msg: "Hello {{ first_name }} {{ last_name }}"
+

@@ -1,0 +1,21 @@
+---
+
+- name: A play with using loop
+  hosts: webservers
+  gather_facts: no
+
+  vars:
+    list1:
+      - Jane
+      - John
+    
+    list2:
+      - Doe
+      - Frost
+  tasks:
+  - name: Printing two lists items
+    debug: 
+      msg: "Key: {{ item.0 }} {{ item.1 }}"
+    with_nested:
+      - "{{ list1 }}"
+      - "{{ list2 }}"

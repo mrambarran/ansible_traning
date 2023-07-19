@@ -1,0 +1,26 @@
+---
+
+- name: Template Challenge 1
+  hosts: webservers
+  gather_facts: yes
+  become: yes
+  become_user: root
+
+  vars_prompt:
+    - name: userName
+      prompt: Enter your username
+      private: no
+
+    - name: hostname
+      prompt: Enter a hostname
+      private: no
+
+    - name: fav_color
+      prompt: Enter your favorite color
+      private: no
+
+  tasks:
+    - name: Generate a config file and send to server
+      template:
+        src: challenge1.jn2
+        dest: /etc/my_config.ini 

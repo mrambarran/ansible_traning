@@ -1,0 +1,13 @@
+---
+
+- name: Vault Lab 1
+  hosts: webservers
+  gather_facts: no
+
+  vars_files:
+    - vault.yaml
+  
+  tasks:
+    - name: Include encrypted tasks
+      debug:
+        msg: "{{ db_username }} and {{ db_password }}"

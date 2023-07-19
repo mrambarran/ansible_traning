@@ -1,0 +1,36 @@
+---
+
+- hosts: webservers
+  gather_facts: no
+  name: A play with set facts
+  
+  tasks:
+  - name: Setting some facts
+    set_fact:
+      fact_one: "Hello"
+      fact_two: "Bye"
+      john_doe: "This is a fact"
+  
+  - name: View facts
+    debug:
+      var: john_doe
+  
+  - name: Add contents to the file
+    shell: "echo {{ john_doe }} >> ~/b/h.txt"
+  
+  - name: get Register
+    shell: cat ~/b/h.txt
+    register: my_var
+  
+  - name: Print my_var
+    debug: 
+      var: my_var.stdout
+  
+  - name: set another fact"
+    set_fact:
+      helloVar: "{{ my_var.stdout }}"
+  
+  - name: Print my_var
+    debug: 
+      var: helloVar
+  

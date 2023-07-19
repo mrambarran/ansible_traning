@@ -1,0 +1,43 @@
+---
+
+- name: A conditional Play
+  hosts: webservers
+  gather_facts: no
+
+  vars:
+    epic: true
+    boomer: no # no = false = 0, yes = true = 1
+    distro: Ubuntu
+  
+  tasks:
+    - name: Task A
+      debug:
+        msg: "Hello A"
+      when: epic
+  
+    - name: Task B
+      debug:
+        msg: "Hello B"
+      when: not boomer | bool
+    
+    - name: Task C
+      debug:
+        msg: "Hello C"
+      when: distro == 'Ubuntu'
+    
+    # If epic is true AND boomer is true OR distro == Ubuntu
+    - name: Task D
+      debug:
+        msg: "Hello D"
+      when: epic and (boomer | bool or distro == 'Ubuntu')
+
+    - name: Another way for Task D
+      debug:
+        msg: "Hello D Again"
+      when:
+        - epic
+        - boomer | bool or distro == 'Ubuntu'
+
+  
+  
+ 

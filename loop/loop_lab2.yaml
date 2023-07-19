@@ -1,0 +1,30 @@
+---
+
+- name: A play with using loop
+  hosts: webservers
+  gather_facts: no
+
+  vars:
+    my_dict:
+      name: John
+      age: 25
+      city: NY
+    
+    networkList:
+      - {ip: 10.10.10.100, gateway: 10.10.10.1}
+      - {ip: 10.10.11.100, gateway: 10.10.11.1}
+      - {ip: 10.10.12.100, gateway: 10.10.12.1}
+
+  tasks:
+  - name: Printing a dictionary
+    debug: 
+      msg: "Key: {{ item.key }}, Value: {{ item.value }}"
+    loop: "{{ my_dict | dict2items }}"
+  
+  - name: Printing Network Devices
+    debug:
+      msg: "IP: {{ networkInfo.ip }} Gateway: {{ networkInfo.gateway }}"
+    loop: "{{ networkList }}"
+    loop_control:
+      loop_var: networkInfo
+    

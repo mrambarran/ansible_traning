@@ -1,0 +1,42 @@
+---
+
+- hosts: webservers
+  gather_facts: no
+  name: A play with set facts
+  
+  vars:
+    age: 18
+  
+  vars_files:
+    - vars.yaml
+  
+  vars_prompt:
+    - name: lastName
+      prompt: Enter your last name
+      private: no
+      default: Doe
+  
+  tasks:
+    - name: Access a file
+      shell: cat ~/b/h.txt
+      register: file_contents
+    
+    - name: Print register
+      debug:
+        var: file_contents
+    
+    - name: set some facts
+      set_fact:
+        first_var: Hello
+        second_var: Bye
+        jane_doe: 18
+        file_cnt: "{{ file_contents.stdout }}"
+    
+    - name: Print a fact using var
+      debug:
+        var: file_cnt
+    
+    - name: Print same fact using msg
+      debug:
+        msg: "{{ file_cnt }}"
+

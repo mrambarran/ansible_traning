@@ -1,0 +1,28 @@
+---
+
+- name: A play with facts
+  hosts: webservers
+  become: yes
+  become_user: root
+  
+  vars:
+    packages:
+      - tree
+      - vim
+      - git
+    
+  tasks:
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+  
+  #- name: Gather package facts
+  #  debug:
+  #    var: ansible.facts.packages
+  
+  - name: Install packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ packages }}" 
+    when: ansible_facts['packages'][item] is not defined

@@ -1,0 +1,30 @@
+---
+
+- name: A play with facts
+  hosts: webservers
+  become: yes
+  become_user: root
+  
+  vars:
+    debian_packages:
+      - tree
+      - vim
+    redhat_packages:
+      - httpd
+      - vim-enhanced
+    
+  tasks:
+
+  - name: Install Debian packages
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ debian_packages }}" 
+    when: ansible_facts['os_family'] == 'Debian'
+  
+  - name: Install Redhat packages
+    yum:
+      name: "{{ item }}"
+      state: present
+    loop: "{{ redhat_packages }}" 
+    when: ansible_facts['os_family'] == 'Redhat'

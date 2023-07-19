@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  gather_facts: no
+
+  name: Play to uses a variables from a file
+
+  vars_files:
+    - vars.yaml
+  
+  tasks:
+  - name: A variable from another file
+    debug:
+      var: first_name
+  
+  - name: A variable from another file
+    debug:
+      var: last_name
+  
+  - name: Print full name from variables file
+    debug:
+      msg: "{{ first_name }} {{ last_name }}"
+  
+  
+
+

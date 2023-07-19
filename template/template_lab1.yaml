@@ -1,0 +1,21 @@
+---
+
+- name: Template Lab1
+  hosts: webservers
+  gather_facts: yes
+
+  vars:
+    dbUsername: root
+    dbPassword: mySecurePassword
+
+    names:
+      - John
+      - James
+      - Jenny
+      - Sarah
+
+  tasks:
+    - name: Generate a config file and send to server
+      template:
+        src: template.jn2
+        dest: ~/config.ini 

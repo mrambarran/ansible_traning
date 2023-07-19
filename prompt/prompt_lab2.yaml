@@ -1,0 +1,29 @@
+---
+
+- hosts: all
+  gather_facts: no
+
+  vars_prompt:
+  - name: firstName
+    prompt: Enter your first name
+    private: no
+    
+  - name: lastName
+    prompt: Enter your last name
+    private: no
+
+  vars:
+    yourAge: 18  
+  
+  tasks:
+  - name: Check if prompt is not empty
+    assert:
+      that: 
+        - lastName != ''
+        - firstName != ''
+      fail_msg: "Last name can not empty"
+      quiet: yes
+
+  - name: Print full name
+    debug:
+      msg: "Hello, {{ firstName }} {{ lastName }}. You're {{ yourAge }} years old."
