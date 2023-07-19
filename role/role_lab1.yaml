@@ -1,7 +1,7 @@
 ---
 
 - name: Role Lab 1
-  hosts: webservers
+  hosts: students
   gather_facts: yes
   become: yes
   become_user: root

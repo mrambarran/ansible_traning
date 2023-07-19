@@ -5,10 +5,12 @@
 
 - name: Use REST API to retrieve some data
   uri:
-    url: "https://catfact.ninja/fact"
+    url: "{{ API_PATH }}"
     return_content: true
     body_format: json
   register: output
+  run_once: true
+  #delegate_to: local # run this taks on the local machine
 
 - name: Create a var for fact
   set_fact:
@@ -16,8 +18,8 @@
 
 - name: Copy motd file to remote server
   template:
-    src: templates/motd.j2
-    dest: /etc/motd
+    src: "{{ TEMPLATE_PATH }}"
+    dest: "{{ DEST_PATH }}"
     owner: root
     group: root
     mode: 0444
